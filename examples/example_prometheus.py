@@ -11,10 +11,10 @@ if __name__ == "__main__":
 
     config = Config(
         config={ # usually read from some yaml config
-            #'sampler': {
-            #    'type': 'const',
-            #    'param': 1,
-            #},
+            'sampler': {
+                'type': 'const',
+                'param': 1,
+            },
             'logging': True,
         },
         service_name='your-app-name',
@@ -25,7 +25,7 @@ if __name__ == "__main__":
     start_http_server(8000)
 
     cnt = 1
-    while cnt < 1000:
+    while cnt < 10000:
         print(cnt)
         with tracer.start_span('TestSpan') as span:
             span.log_event('test message', payload={'life': 42})
@@ -33,6 +33,6 @@ if __name__ == "__main__":
             with tracer.start_span('ChildSpan', child_of=span) as child_span:
                 span.log_event('down below')
 
-        time.sleep(2)   # yield to IOLoop to flush the spans - https://github.com/jaegertracing/jaeger-client-python/issues/50
+        #time.sleep(2)   # yield to IOLoop to flush the spans - https://github.com/jaegertracing/jaeger-client-python/issues/50
         cnt += 1
     tracer.close()  # flush any buffered spans

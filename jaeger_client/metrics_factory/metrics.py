@@ -46,7 +46,7 @@ class PrometheusMetricsFactory(MetricsFactory):
         if tags is not None:
             gauge = gauge.labels(**tags)
         def update(value):
-            print("gauge inc")
-            gauge.inc(value)
+            print("gauge set")
+            gauge.set(value)
         return update
 
