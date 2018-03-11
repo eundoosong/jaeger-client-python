@@ -1,7 +1,7 @@
 import logging
 import time
 from jaeger_client import Config
-from jaeger_client.metrics_factory.metrics import PrometheusMetricsFactory
+from jaeger_client.metrics_factory.prometheus_metrics import PrometheusMetricsFactory
 from prometheus_client import start_http_server
 
 if __name__ == "__main__":
@@ -33,6 +33,6 @@ if __name__ == "__main__":
             with tracer.start_span('ChildSpan', child_of=span) as child_span:
                 span.log_event('down below')
 
-        #time.sleep(2)   # yield to IOLoop to flush the spans - https://github.com/jaegertracing/jaeger-client-python/issues/50
+        time.sleep(2)   # yield to IOLoop to flush the spans - https://github.com/jaegertracing/jaeger-client-python/issues/50
         cnt += 1
     tracer.close()  # flush any buffered spans
