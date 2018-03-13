@@ -18,8 +18,9 @@ from collections import defaultdict
 
 
 class PrometheusMetricsFactory(MetricsFactory):
-    def __init__(self):
+    def __init__(self, namespace=''):
         self._cache = defaultdict(object)
+        self._namespace = namespace
 
     def _get_tag_names(self, label):
         if label is None:
@@ -33,7 +34,7 @@ class PrometheusMetricsFactory(MetricsFactory):
         cache_key = name + ''.join(label_name_list)
         cached_gauge = cache.get(cache_key)
         if cached_gauge is None:
-            cache[cache_key] = metric(name, name, label_name_list)
+            cache[cache_key] = metric(name, name, label_name_list, self._namespace)
         return cache[cache_key]
 
     def create_counter(self, name, tags=None):
