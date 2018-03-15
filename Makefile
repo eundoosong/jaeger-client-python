@@ -26,7 +26,6 @@ bootstrap:
 	pip install -r requirements-dev.txt
 	pip install -r requirements-tests.txt
 	python setup.py develop
-	scripts/update-coveragerc.sh
 
 .PHONY: test
 test: clean
