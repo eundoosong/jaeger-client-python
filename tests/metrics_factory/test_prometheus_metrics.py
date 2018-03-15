@@ -17,7 +17,7 @@ import pytest
 
 try:
     from jaeger_client.metrics_factory.prometheus_metrics \
-        import PrometheusFactory
+        import PrometheusMetricsFactory
     from prometheus_client import REGISTRY
 except ImportError:
     pass
@@ -27,30 +27,30 @@ except ImportError:
 class TestPrometheusMetrics:
 
     def test_prometheus_metrics_counter(self):
-        metrics = PrometheusFactory()
+        metrics = PrometheusMetricsFactory(namespace='test')
         counter1 = metrics.create_counter(name='jaeger:test_counter', tags={'result': 'ok'})
         counter1(1)
         counter2 = metrics.create_counter(name='jaeger:test_counter', tags={'result': 'ok'})
         counter2(1)
-        after = REGISTRY.get_sample_value('jaeger:test_counter', {'result': 'ok'})
+        after = REGISTRY.get_sample_value('test_jaeger:test_counter', {'result': 'ok'})
         assert 2 == after
 
     def test_prometheus_metrics_counter_without_tags(self):
-        metrics = PrometheusFactory()
+        metrics = PrometheusMetricsFactory()
         counter = metrics.create_counter(name='jaeger:test_counter_no_tags')
         counter(1)
         after = REGISTRY.get_sample_value('jaeger:test_counter_no_tags')
         assert 1 == after
 
     def test_prometheus_metrics_guage(self):
-        metrics = PrometheusFactory()
+        metrics = PrometheusMetricsFactory(namespace='test')
         gauge = metrics.create_gauge(name='jaeger:test_gauge', tags={'result': 'ok'})
         gauge(1)
-        after = REGISTRY.get_sample_value('jaeger:test_gauge', {'result': 'ok'})
+        after = REGISTRY.get_sample_value('test_jaeger:test_gauge', {'result': 'ok'})
         assert 1 == after
 
     def test_prometheus_metrics_gauge_without_tags(self):
-        metrics = PrometheusFactory()
+        metrics = PrometheusMetricsFactory()
         gauge = metrics.create_gauge(name='jaeger:test_gauge_no_tags')
         gauge(1)
         after = REGISTRY.get_sample_value('jaeger:test_gauge_no_tags')

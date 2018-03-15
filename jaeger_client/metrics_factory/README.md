@@ -15,7 +15,7 @@ To configure the Prometheus integration, a custom Jaeger Tracer instance has to 
 ```python
 config = Config(
         service_name='your-app-name',
-        metrics_factory=PrometheusMetricsFactory()
+        metrics_factory=PrometheusMetricsFactory(namespace=service_name)
 )
 tracer = config.initialize_tracer()
 ```

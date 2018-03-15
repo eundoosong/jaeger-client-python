@@ -10,4 +10,4 @@ function insert_source_file_into_omit() {
     fi
 }
 
-insert_source_file_into_omit "prometheus_client" "jaeger_client\/metrics_factory\/prometheus_metrics.py"
+insert_source_file_into_omit "prometheus-client" "jaeger_client\/metrics_factory\/prometheus_metrics.py"
