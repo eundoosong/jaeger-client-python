@@ -23,7 +23,7 @@ except ImportError:
     pass
 
 @pytest.mark.skipif('prometheus_client' not in sys.modules,
-                    reason="requires prometheus_client library")
+                    reason="requires prometheus_client")
 class TestPrometheusMetrics:
 
     def test_prometheus_metrics_counter(self):

@@ -18,7 +18,7 @@ if __name__ == "__main__":
             'logging': True,
         },
         service_name='your-app-name',
-        metrics_factory=PrometheusMetricsFactory()
+        metrics_factory=PrometheusMetricsFactory('test_metrics')
     )
     # this call also sets opentracing.tracer
     tracer = config.initialize_tracer()

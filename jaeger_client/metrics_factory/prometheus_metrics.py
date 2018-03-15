@@ -12,12 +12,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from prometheus_client import Counter, Gauge
 from jaeger_client.metrics import MetricsFactory
 from collections import defaultdict
+from prometheus_client import Counter, Gauge
 
 
 class PrometheusMetricsFactory(MetricsFactory):
+    """
+    Provides metrics backed by Prometheus
+    """
     def __init__(self, namespace=''):
         self._cache = defaultdict(object)
         self._namespace = namespace
