@@ -1,4 +1,4 @@
-# Copyright (c) 2016 Uber Technologies, Inc.
+# Copyright (c) 2018 Uber Technologies, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,18 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import mock
-import pytest
-from jaeger_client import ConstSampler, Tracer
-from tornado.httpclient import AsyncHTTPClient
+from __future__ import absolute_import
 
-
-@pytest.fixture(scope='function')
-def tracer():
-    reporter = mock.MagicMock()
-    sampler = ConstSampler(True)
-    return Tracer(
-        service_name='test_service_1', reporter=reporter, sampler=sampler)
-
-AsyncHTTPClient.configure('tornado.curl_httpclient.CurlAsyncHTTPClient')
-print('Configured AsyncHTTPClient to use tornado.curl_httpclient.CurlAsyncHTTPClient')
+from .metrics import MetricsFactory  # noqa
+from .metrics import LegacyMetricsFactory  # noqa
+from .metrics import Metrics  # noqa

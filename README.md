@@ -14,7 +14,6 @@ Please see [CONTRIBUTING.md](./CONTRIBUTING.md).
 ## Installation
 
 ```bash
-apt-get install python-dev
 pip install jaeger-client
 ```
 
@@ -39,6 +38,7 @@ if __name__ == "__main__":
             'logging': True,
         },  
         service_name='your-app-name',
+        validate=True,
     )
     # this call also sets opentracing.tracer
     tracer = config.initialize_tracer()
@@ -75,11 +75,28 @@ The recommended way to initialize the tracer for production use:
 from jaeger_client import Config
 
 def init_jaeger_tracer(service_name='your-app-name'):
-    config = Config(config={}, service_name=service_name)
+    config = Config(config={}, service_name=service_name, validate=True)
     return config.initialize_tracer()
 ```
 
 Note that the call `initialize_tracer()` also sets the `opentracing.tracer` global variable.
+
+#### Prometheus metrics
+
+This module brings a [Prometheus](https://github.com/prometheus/client_python) integration to the internal Jaeger metrics.  
+The way to initialize the tracer with Prometheus metrics:
+
+```python
+from jaeger_client.metrics.prometheus import PrometheusMetricsFactory
+
+config = Config(
+        config={},
+        service_name='your-app-name',
+        validate=True,
+        metrics_factory=PrometheusMetricsFactory(namespace='your-app-name')
+)
+tracer = config.initialize_tracer()
+```
 
 ### Development
 
@@ -137,7 +154,6 @@ you can provide the configuration property `propagation: 'b3'` and the
 The B3 codec assumes it will receive lowercase HTTP headers, as this seems
 to be the standard in the popular frameworks like Flask and Django.
 Please make sure your framework does the same.
-
 
 ## License
 

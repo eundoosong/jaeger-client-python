@@ -37,11 +37,9 @@ setup(
     install_requires=[
         'futures;python_version<"3"',
         'threadloop>=1,<2',
-        # we want thrift>=0.9.2.post1,<0.9.3, but we let the users pin to that
         'thrift',
         'tornado>=4.3,<5',
         'opentracing>=1.2.2,<1.4',
-        'future',
     ],
     # Uncomment below if need to test with unreleased version of opentracing
     # dependency_links=[
@@ -51,9 +49,10 @@ setup(
     extras_require={
         'tests': [
             'mock==1.0.1',
+            'pycurl>=7.43,<8',
             'pytest>=2.7,<3',
             'pytest-cov',
-            'coverage<4.4', # can remove after https://bitbucket.org/ned/coveragepy/issues/581/44b1-44-breaking-in-ci
+            'coverage<4.4',  # can remove after https://bitbucket.org/ned/coveragepy/issues/581/44b1-44-breaking-in-ci
             'pytest-timeout',
             'pytest-tornado',
             'pytest-benchmark[histogram]>=3.0.0rc1',
@@ -63,6 +62,7 @@ setup(
             'coveralls',
             'tchannel>=0.27;python_version<"3"',
             'opentracing_instrumentation>=2,<3',
+            'prometheus_client',
         ]
     },
 )
